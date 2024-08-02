@@ -16,10 +16,14 @@ ARG DEV=false
 # We can make them as multiple RUN commands but it will increase the size of the image as each RUN command will create a new layer in the image
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
+    apk add --update --no-cache postgresql-client && \
+    apk add --update --no-cache --virtual .tmp-build-deps \
+        build-base postgresql-dev musl-dev && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ $DEV = "true" ]; \
         then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
     fi && \
+    apk del .tmp-build-deps && \
     rm -rf /tmp && \
     adduser \
         --disabled-password \
