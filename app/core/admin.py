@@ -39,3 +39,5 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(models.User, UserAdmin)
 # The UserAdmin class is a configuration class that inherits from BaseUserAdmin.
+admin.site.register(models.Recipe)
+admin.site.register(models.Tag)
